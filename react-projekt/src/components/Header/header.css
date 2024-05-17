@@ -1,0 +1,21 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f1f1f1;
+  }
+  
+  .logo {
+    font-size: 24px;
+  }
+  
+  .search-bar {
+    flex: 1;
+    margin: 0 10px;
+  }
+  
+  .theme-toggle {
+    padding: 5px 10px;
+  }
+  
