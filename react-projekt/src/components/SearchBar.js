@@ -1,8 +1,10 @@
 import React, {useState} from "react";
+import FilterBar from "./FilterBar";
 
 //SearchBar component takes onSearch as a prop and calls it with the search term
 const SearchBar = ({onSearch}) =>{
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedFilter, setSelectedFilter] = useState('icao24');
     
     //handles the change in the input field
     const handleChange = (e) => {
@@ -12,13 +14,14 @@ const SearchBar = ({onSearch}) =>{
     //Handles the form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSearch(searchTerm); 
+        onSearch(searchTerm, selectedFilter); 
     };
     return (
         <form onSubmit={handleSubmit}>
+            <FilterBar selectedFilter={selectedFilter} setSelectedFilter={setSelectedFilter}/>
             <input
                 type="text"
-                placeholder="Search by ICA024, Callsign, or Origin Country"
+                placeholder={`Search by ${selectedFilter.replace('_', ' ')}`}
                 value={searchTerm}
                 onChange={handleChange}
             />

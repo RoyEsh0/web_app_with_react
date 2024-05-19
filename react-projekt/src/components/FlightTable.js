@@ -13,12 +13,13 @@ const FlightTable = ({flightData}) =>{
             <th>Longitude</th>
             <th>Latitude</th>
             <th>Altitude</th>
+            <th>On The Ground</th>
             <th>Velocity</th>
           </tr>
         </thead>
         <tbody>
           {flightData.map((flight, index)=>{
-            console.log("Flight data: ", flight);
+            //console.log("Flight data: ", flight);
             return(
               <tr key={index}>
                 <td>{flight[0] || 'N'}</td>
@@ -29,6 +30,7 @@ const FlightTable = ({flightData}) =>{
                 <td>{flight[5]}</td>
                 <td>{flight[6]}</td>
                 <td>{flight[7]}</td>
+                <td>{flight[8]}</td>
                 <td>{flight[9]}</td>
                 {/*<td>{flight[9]}</td>*/}
               </tr>
