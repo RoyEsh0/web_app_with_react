@@ -1,11 +1,75 @@
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --header-background: #f1f1f1;
+  --header-text-color: #000000;
+  --button-background: #007BFF;
+  --button-text-color: #ffffff;
+  --button-hover-background: #0056b3;
+}
+
+body.dark {
+  --background-color: #121212;
+  --text-color: #ffffff;
+  --header-background: #1f1f1f;
+  --header-text-color: #ffffff;
+  --button-background: #74bdc9;
+  --button-text-color: #000000;
+  --button-hover-background: #007bf0; 
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
 .app {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  
-  .main-content {
-    display: flex;
-    flex: 1;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--header-background);
+  color: var(--header-text-color);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 50px;
+  margin-right: 10px;
+}
+
+.search-bar {
+  flex: 1;
+  margin: 0 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.theme-toggle {
+  padding: 10px 20px;
+  background-color: var(--button-background);
+  color: var(--button-text-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background-color: var(--button-hover-background);
+}
