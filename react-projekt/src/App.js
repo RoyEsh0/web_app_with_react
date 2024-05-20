@@ -15,10 +15,12 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchError, setSearchError] = useState('');
+  //const [selectedFligth, setSelectedFligth] = useState(null);
 
 
   useEffect(() => {
     const getFlightData = async() => {
+      console.log("getFlightData")
       try {
         const data = await fetchFlightData();
         console.log("Fetched flight data:", data)
@@ -35,6 +37,7 @@ function App() {
 
     getFlightData();
   }, []);
+  
     const handleSearch  = (searchTerm, selectedFilter) => {
       
       const filterIndex = {

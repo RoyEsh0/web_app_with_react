@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {mockFlightData} from './mockData';
 
-const API_URL = 'https://opensky-network.org/api/states/all'
+//const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+const API_URL = 'https://opensky-network.org/api/states/all';
 
 let cache = {
     data : null,
