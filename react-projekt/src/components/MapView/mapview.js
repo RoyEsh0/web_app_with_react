@@ -11,7 +11,6 @@ const MapView = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {/* Om du har några Markers eller andra komponenter, lägg dem här */}
       </MapContainer>
     </div>
   );
