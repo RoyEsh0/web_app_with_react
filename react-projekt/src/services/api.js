@@ -2,31 +2,42 @@ import axios from 'axios';
 import {mockFlightData} from './mockData';
 
 //const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
-const API_URL = 'https://opensky-network.org/api/states/all';
-
-let cache = {
-    data : null,
-    timestamp: 0
-};
+const API_URL = 'http://localhost:3001/api/v1/flights';
+const API_KEY = 'e9dbe7ea23490b5e6ffafa8f53990c36';
 
 
-const CACHE_DURATION = 60 * 1000; // this will cache the data for 1 minute
 
 export const fetchFlightData = async() => {
 
-    const now = Date.now();
-    if(cache.data && (now - cache.timestamp) < CACHE_DURATION) {
-        console.log("Returning cached data");
-        return cache.data;
-    }
+    const cachedData = localStorage.getItem('flightData');
+    if (cachedData) {
+        return JSON.parse(cachedData);
+        }
+
     try {
-        const response = await axios.get(API_URL);
-        cache.data = response.data;
-        cache.timestamp = now;
-        return response.data;
+        const params = {
+            access_key : API_KEY
+        };
+        const response = await axios.get( API_URL, { params });
+        console.log("Full API response: " , response);
+        const apiResponse = response.data;
+        console.log("API response data: " , apiResponse);
+        localStorage.setItem('flightData', JSON.stringify(apiResponse));
+        return apiResponse;
+        
 
     } catch (error) {
-        console.error("Error fetching flight data: ", error);
-        throw error
+        if (error.response){
+            console.error("Error Response: ", error.response);
+            console.error("Response Data:", error.response.data);
+            console.error("Response Status:", error.response.status);
+            console.error("Response Headers:", error.response.headers);
+        }else if(error.request){
+            console.error("Error Request: ", error.request);
+        }else {
+            console.error("Error Message: ", error.message);
+        }
+        
+        throw error;
     }
 };

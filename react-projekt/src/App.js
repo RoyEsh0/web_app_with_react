@@ -24,8 +24,14 @@ function App() {
       try {
         const data = await fetchFlightData();
         console.log("Fetched flight data:", data)
-        setFlightData(data.states);
-        setFilteredData(data.states);
+        if (data.data){
+          setFlightData(data.data);
+          setFilteredData(data.data);
+        } else {
+          setLoading(false);
+          console.error("No flight data available in the response!");
+        }
+       
         setLoading(false);
       
       } catch (error) {
@@ -41,10 +47,10 @@ function App() {
     const handleSearch  = (searchTerm, selectedFilter) => {
       
       const filterIndex = {
-        icao24: 0,
-        callsign: 1,
-        origin_country: 2,
-        velocity: 9,
+        icao24: 'icao_24',
+        callsign: 'callsign',
+        origin_country: 'departure.airport.country',
+        velocity: 'speed.horizontal',
       }[selectedFilter];
 
       console.log("Search term: ", searchTerm);
@@ -91,7 +97,13 @@ function App() {
 
 
   if (error) {
-    return <div>Error fetching data: {error.message}</div>;
+    return (
+      <div>
+        <div>Error fetching data: {error.message}</div>
+        {error.response && <div>Response: {JSON.stringify(error.response.data)}</div>}
+        {error.request && <div>Request: {JSON.stringify(error.request)}</div>}
+      </div>
+    );
   }
 
   return (

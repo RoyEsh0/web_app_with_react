@@ -1,8 +1,25 @@
 
-export const mockFlightData = {
-    time : 1517227200,
-    states: [
-        ["a", "CALLSIGN1", "COUNTRY1", 1517227199, 1517227199, -4.3169, 55.4104, 975, false, 222.22, 0.64, 122.44, null, 0, null, 0],
-        ["b", "CALLSIGN2", "COUNTRY2", 1517227199, 1517227199, -4.4169, 55.5104, 1000, false, 224.24, 0.64, 125.44, null, 0, null, 0]
-    ],
-};    
+ 
+export const mockFlightData = async () => {
+    const mockData = {
+      data: [
+        {
+          icao_24: "abcd1234",
+          callsign: "TEST123",
+          departure: { airport: { country: "Testland" } },
+          time_position: 1609459200,
+          last_contact: 1609459800,
+          longitude: 10.0,
+          latitude: 20.0,
+          altitude: 30000,
+          on_ground: false,
+          speed: { horizontal: 500 }
+        },
+        // Add more mock data as needed
+      ]
+    };
+    
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(mockData), 1000);
+    });
+  };
