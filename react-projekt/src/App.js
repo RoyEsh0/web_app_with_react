@@ -1,5 +1,18 @@
+import React from 'react';
+import Header from './components/Header/header';
+import Sidebar from './components/Sidebar/sidebar';
+import MapView from './components/MapView/mapview';
+import Footer from './components/Footer/footer';
+import './app.css';
+import { ThemeProvider, useTheme } from './ThemeContext';
 
-import './index.css';
+function AppContent() {
+  const { theme } = useTheme();
+
+  React.useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
 
 
 import React, {useState, useEffect} from 'react';
@@ -113,16 +126,34 @@ function App() {
     );
   }
 
+  
+
   return (
-    <div className='App'>
-      <h1>Flight Tracking Data</h1>
-      <SearchBar onSearch={handleSearch}/>
-      <RouteSearch onRouteSearch={handleRouteSearch}/>
-      {searchError && <div style={{color: 'red'}}>{searchError}</div>}
-      <FlightTable flightData={filteredData}/>
+    <div className={`app ${theme}`}>
+      <Header />
+      <div className="main-content">
+        <Sidebar />
+        <MapView />
+        <h1>Flight Tracking Data</h1>
+        <SearchBar onSearch={handleSearch}/>
+        <RouteSearch onRouteSearch={handleRouteSearch}/>
+        {searchError && <div style={{color: 'red'}}>{searchError}</div>}
+        <FlightTable flightData={filteredData}/>
+      </div>
+      <Footer />
+
     </div>
   );
 }
 
 
-export default App;
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
+}
+
+
+
