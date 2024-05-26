@@ -10,10 +10,12 @@ const FilterBar = ({selectedFilter, setSelectedFilter}) => {
     
     return (
         <select value={selectedFilter} onChange={handleChange}>
-            <option value="icao24">ICAO24</option>
-            <option value="callsign">Callsign</option>
-            <option value="origin_country">Origin Country</option>
-            <option value="velocity">Velocity</option>
+            <option value="flight_date">Flight Date</option>
+            <option value="flight_status">Flight Status</option>
+            <option value="flight.name">Airline</option>
+            <option value="flight.number">Flight Number</option>
+            <option value="departure.airport">Departure Airport</option>
+            <option value="arrival.airport">Arrival Airport</option>
 
         </select>
         

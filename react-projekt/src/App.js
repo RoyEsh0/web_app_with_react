@@ -6,6 +6,7 @@ import React, {useState, useEffect} from 'react';
 import { fetchFlightData } from './services/api';
 import SearchBar from './components/SearchBar';
 import FlightTable from './components/FlightTable';
+import RouteSearch from './components/RouteSearch';
 
 
 
@@ -15,7 +16,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchError, setSearchError] = useState('');
-  //const [selectedFligth, setSelectedFligth] = useState(null);
+  
 
 
   useEffect(() => {
@@ -44,51 +45,57 @@ function App() {
     getFlightData();
   }, []);
   
-    const handleSearch  = (searchTerm, selectedFilter) => {
-      
-      const filterIndex = {
-        icao24: 'icao_24',
-        callsign: 'callsign',
-        origin_country: 'departure.airport.country',
-        velocity: 'speed.horizontal',
-      }[selectedFilter];
+  
+  const handleSearch = (searchTerms) => {
+    const { departure, destination, filter, value } = searchTerms;
 
-      console.log("Search term: ", searchTerm);
-      console.log("Selected filter: ", selectedFilter);
-      console.log("Filter index: ", filterIndex);
-      
-      const trimmedSearchTerm = searchTerm.trim().toLowerCase();
+    let filtered = flightData;
 
-      if (!trimmedSearchTerm){
-        setFilteredData(flightData);
-        setSearchError('');
-        return;
-      }
+    if (departure) {
+      filtered = filtered.filter((flight) => 
+        flight.departure.airport?.toLowerCase().includes(departure.toLowerCase())
+      );
+    }
 
-      //Flitering the data according to the search term
-      const filtered = flightData.filter((flight) => {
-        console.log("Flight data Entry: ", flight);
+    if (destination) {
+      filtered = filtered.filter((flight) => 
+        flight.arrival.airport?.toLowerCase().includes(destination.toLowerCase())
+      );
+    }
 
-        const fieldValue = flight[filterIndex] ? flight[filterIndex].toString().trim().toLowerCase() : '';
-        console.log(`Comparing "${fieldValue}" with "${trimmedSearchTerm}"`);
-        //console.log("Flight data: ", flight);
-
-        return fieldValue.includes(trimmedSearchTerm);
-        //return flight[filterIndex] && flight[filterIndex].toLowerCase().includes(searchTerm.toLowerCase());
+    if (value) {
+      filtered = filtered.filter((flight) => {
+        const fieldValue = filter.split('.').reduce((obj, key) => obj?.[key], flight)?.toString().trim().toLowerCase() || '';
+        return fieldValue.includes(value.toLowerCase());
       });
+    }
 
-      if (FileReader.length === 0 ){
-        setSearchError(`No results found for "${searchTerm}" in ${selectedFilter}`);
+    if (filtered.length === 0) {
+      setSearchError(`No results found for the given search criteria`);
+    } else {
+      setSearchError('');
+    }
 
-      } else {
-        setSearchError('');
-      }
+    console.log("Filtered data: ", filtered);
+    setFilteredData(filtered);
+  };
 
+  const handleRouteSearch = (departure, destination) => {
+    const filtered = flightData.filter((flight) => 
+      flight.departure.airport?.toLowerCase().includes(departure.toLowerCase()) &&
+      flight.arrival.airport?.toLowerCase().includes(destination.toLowerCase())
+    );
 
-      console.log("Filtered data: ", filtered);
-      setFilteredData(filtered);
+    if (filtered.length === 0) {
+      setSearchError(`No routes found from ${departure} to ${destination}`);
+    } else {
+      setSearchError('');
+    }
 
-    };
+    console.log("Filtered data: ", filtered);
+    setFilteredData(filtered);
+  };
+
 
 
   if (loading) {
@@ -110,6 +117,7 @@ function App() {
     <div className='App'>
       <h1>Flight Tracking Data</h1>
       <SearchBar onSearch={handleSearch}/>
+      <RouteSearch onRouteSearch={handleRouteSearch}/>
       {searchError && <div style={{color: 'red'}}>{searchError}</div>}
       <FlightTable flightData={filteredData}/>
     </div>

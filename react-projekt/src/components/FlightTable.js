@@ -17,11 +17,11 @@ const FlightTable = ({flightData}) =>{
           <th>Arrival Airport</th>
           <th>Scheduled Departure</th>
           <th>Scheduled Arrival</th>
-          <th>Latitude</th>
+          {/*<th>Latitude</th>
           <th>Longitude</th>
           <th>Altitude</th>
           <th>On The Ground</th>
-          <th>Horizontal Speed</th>
+    <th>Horizontal Speed</th>*/}
             </tr>
           </thead>
           <tbody>
@@ -37,11 +37,11 @@ const FlightTable = ({flightData}) =>{
               <td>{flight.arrival?.airport || 'N/A'}</td>
               <td>{flight.departure?.scheduled || 'N/A'}</td>
               <td>{flight.arrival?.scheduled || 'N/A'}</td>
-              <td>{flight.live?.latitude || 'N/A'}</td>
+              {/*<td>{flight.live?.latitude || 'N/A'}</td>
               <td>{flight.live?.longitude || 'N/A'}</td>
               <td>{flight.live?.altitude || 'N/A'}</td>
               <td>{flight.live?.is_ground ? 'Yes' : 'No'}</td>
-              <td>{flight.live?.speed_horizontal || 'N/A'}</td>
+              <td>{flight.live?.speed_horizontal || 'N/A'}</td>*/}
                 </tr>
               );
             })}
