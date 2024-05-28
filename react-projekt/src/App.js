@@ -6,9 +6,9 @@ import Footer from './components/Footer/footer';
 import './app.css';
 import { ThemeProvider, useTheme } from './ThemeContext';
 import { fetchFlightData } from './services/api';
-import SearchBar from './components/SearchBar';
-import FlightTable from './components/FlightTable';
-import RouteSearch from './components/RouteSearch';
+import SearchBar from './components/SearchBar/SearchBar';
+import FlightTable from './components/FlightTable/FlightTable';
+import RouteSearch from './components/RouteSearch/RouteSearch';
 
 
 
@@ -119,7 +119,6 @@ function AppContent() {
       <div className="main-content">
         <Sidebar />
         <MapView />
-        <h1>Flight Tracking Data</h1>
         <SearchBar onSearch={handleSearch} />
         <RouteSearch onRouteSearch={handleRouteSearch} />
         {searchError && <div style={{ color: 'red' }}>{searchError}</div>}

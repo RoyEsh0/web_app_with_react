@@ -1,8 +1,8 @@
 import axios from 'axios';
-//import { mockFlightData } from './mockData';
+import { mockFlightData } from './mockData';
 
 //För att test med mockdata
-/*export const fetchFlightData = async () => {
+export const fetchFlightData = async () => {
   try {
     const data = await mockFlightData();
     console.log("Using mock flight data:", data);
@@ -11,14 +11,14 @@ import axios from 'axios';
     console.error("Error fetching mock data: ", error);
     throw error;
   }
-};*/
+};
 
 //const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
-const API_URL = 'http://localhost:3001/api/v1/flights';
-const API_KEY = 'e9dbe7ea23490b5e6ffafa8f53990c36';
+//const API_URL = 'http://localhost:3001/api/v1/flights';
+//const API_KEY = 'e9dbe7ea23490b5e6ffafa8f53990c36';
 
 
-export const fetchFlightData = async() => {
+/*export const fetchFlightData = async() => {
 
     const cachedData = localStorage.getItem('flightData');
     if (cachedData) {
@@ -51,4 +51,4 @@ export const fetchFlightData = async() => {
         
         throw error;
     }
-};
+};*/

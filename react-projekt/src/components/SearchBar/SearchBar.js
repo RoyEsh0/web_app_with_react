@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import FilterBar from "./FilterBar";
+import FilterBar from "../FilterBar/FilterBar";
 
 //SearchBar component takes onSearch as a prop and calls it with the search term
 const SearchBar = ({onSearch}) =>{
