@@ -7,7 +7,7 @@ app.use('/api', createProxyMiddleware({
   target: 'http://api.aviationstack.com',
   changeOrigin: true,
   pathRewrite: {
-    '^/api': '', // remove /api from the request path
+    '^/api': '', 
   },
 }));
 

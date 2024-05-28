@@ -1,21 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header/header';
 import Sidebar from './components/Sidebar/sidebar';
 import MapView from './components/MapView/mapview';
 import Footer from './components/Footer/footer';
 import './app.css';
 import { ThemeProvider, useTheme } from './ThemeContext';
-
-function AppContent() {
-  const { theme } = useTheme();
-
-  React.useEffect(() => {
-    document.body.className = theme;
-  }, [theme]);
-
-
-
-import React, {useState, useEffect} from 'react';
 import { fetchFlightData } from './services/api';
 import SearchBar from './components/SearchBar';
 import FlightTable from './components/FlightTable';
@@ -23,31 +12,33 @@ import RouteSearch from './components/RouteSearch';
 
 
 
-function App() {
+
+function AppContent() {
+  const { theme } = useTheme();
   const [flightData, setFlightData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchError, setSearchError] = useState('');
-  
-
 
   useEffect(() => {
-    const getFlightData = async() => {
+    document.body.className = theme;
+  }, [theme]);
+
+  useEffect(() => {
+    const getFlightData = async () => {
       console.log("getFlightData")
       try {
         const data = await fetchFlightData();
         console.log("Fetched flight data:", data)
-        if (data.data){
+        if (data.data) {
           setFlightData(data.data);
           setFilteredData(data.data);
         } else {
           setLoading(false);
           console.error("No flight data available in the response!");
         }
-       
         setLoading(false);
-      
       } catch (error) {
         console.log("Error in useEffect: ", error.message);
         setError(error);
@@ -57,21 +48,20 @@ function App() {
 
     getFlightData();
   }, []);
-  
-  
+
   const handleSearch = (searchTerms) => {
     const { departure, destination, filter, value } = searchTerms;
 
     let filtered = flightData;
 
     if (departure) {
-      filtered = filtered.filter((flight) => 
+      filtered = filtered.filter((flight) =>
         flight.departure.airport?.toLowerCase().includes(departure.toLowerCase())
       );
     }
 
     if (destination) {
-      filtered = filtered.filter((flight) => 
+      filtered = filtered.filter((flight) =>
         flight.arrival.airport?.toLowerCase().includes(destination.toLowerCase())
       );
     }
@@ -94,7 +84,7 @@ function App() {
   };
 
   const handleRouteSearch = (departure, destination) => {
-    const filtered = flightData.filter((flight) => 
+    const filtered = flightData.filter((flight) =>
       flight.departure.airport?.toLowerCase().includes(departure.toLowerCase()) &&
       flight.arrival.airport?.toLowerCase().includes(destination.toLowerCase())
     );
@@ -109,12 +99,9 @@ function App() {
     setFilteredData(filtered);
   };
 
-
-
   if (loading) {
-    return <div>loading ...</div>;
+    return <div>Loading...</div>;
   }
-
 
   if (error) {
     return (
@@ -126,8 +113,6 @@ function App() {
     );
   }
 
-  
-
   return (
     <div className={`app ${theme}`}>
       <Header />
@@ -135,17 +120,15 @@ function App() {
         <Sidebar />
         <MapView />
         <h1>Flight Tracking Data</h1>
-        <SearchBar onSearch={handleSearch}/>
-        <RouteSearch onRouteSearch={handleRouteSearch}/>
-        {searchError && <div style={{color: 'red'}}>{searchError}</div>}
-        <FlightTable flightData={filteredData}/>
+        <SearchBar onSearch={handleSearch} />
+        <RouteSearch onRouteSearch={handleRouteSearch} />
+        {searchError && <div style={{ color: 'red' }}>{searchError}</div>}
+        <FlightTable flightData={filteredData} />
       </div>
       <Footer />
-
     </div>
   );
 }
-
 
 function App() {
   return (
@@ -155,5 +138,4 @@ function App() {
   );
 }
 
-
-
+export default App;
