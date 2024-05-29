@@ -5,7 +5,7 @@ import L from 'leaflet';
 
 // Custom icon for flights
 const flightIcon = new L.Icon({
-  iconUrl: 'https://example.com/path/to/your/flight-icon.png', // Use a path to your flight icon
+  iconUrl: '/plane.png', // Use a path to your flight icon
   iconSize: [25, 25], // Adjust size as necessary
   iconAnchor: [12, 12],
   popupAnchor: [0, -12]
@@ -24,28 +24,27 @@ const MapView = ({ flightData }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {flightData.map(flight => {
-          // Check if flight location data is available
-          if (flight.location && flight.location.lat !== undefined && flight.location.lon !== undefined) {
+        {flightData && flightData.map((flight, index) => {
+          const { latitude, longitude, callsign, origin_country, geo_altitude, velocity } = flight;
+          if (latitude !== null && longitude !== null) {
             return (
               <Marker
-                key={flight.id}
-                position={[flight.location.lat, flight.location.lon]}
+                key={flight.icao24 || index} // Use ICAO24 as a key
+                position={[latitude, longitude]}
                 icon={flightIcon}
               >
                 <Popup>
                   <div>
-                    <h3>{flight.airline}</h3>
-                    <p>Flight Number: {flight.flight_number}</p>
-                    <p>From: {flight.departure.airport}</p>
-                    <p>To: {flight.arrival.airport}</p>
+                    <h3>{callsign || 'Unknown'}</h3>
+                    <p>Country: {origin_country}</p>
+                    <p>Altitude: {geo_altitude} m</p>
+                    <p>Velocity: {velocity} m/s</p>
                   </div>
                 </Popup>
               </Marker>
             );
           } else {
-            // Optionally, handle flights without location data
-            console.warn(`Flight ${flight.id} is missing location data.`);
+            console.warn(`Flight ${flight ? flight.icao24 : 'undefined'} is missing location data.`);
             return null;
           }
         })}
