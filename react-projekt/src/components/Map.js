@@ -9,8 +9,8 @@ const Map = () => {
   const [error, setError] = useState(null);
   const [lastFetch, setLastFetch] = useState(0);
 
-  const flightIcon = L.divIcon({
-    html: '&#9992;', //ikon för flygplan, statiska (roterar inte)
+  const flightIcon = (heading) => L.divIcon({
+    html: `<div style="transform: rotate(${heading}deg);">&#9992;</div>`, // Unicode för flygplan-ikon
     iconSize: [40, 40], 
     className: 'flight-icon', 
   });
@@ -50,6 +50,7 @@ const Map = () => {
               longitude: flight[5],   // Longitud
               latitude: flight[6],    // Latitud
               altitude: flight[7],    // Altitud
+              heading: flight[10],    // Riktning
             }));
 
           console.log('Processed flight data:', europeanFlights); 
@@ -78,12 +79,11 @@ const Map = () => {
       />
       {error && <p>Error: {error}</p>}
       {flightData.length > 0 ? flightData.map((flight) => (
-        <Marker key={flight.id} position={[flight.latitude, flight.longitude]} icon={flightIcon}>
-          <Popup>
-            <p>Flight ID: {flight.id}</p>
+        <Marker key={flight.id} position={[flight.latitude, flight.longitude]} icon={flightIcon(flight.heading)}>          <Popup>
+            <p>Flyg ID: {flight.id}</p>
             <p>Callsign: {flight.callsign}</p>
-            <p>Country: {flight.origin_country}</p>
-            <p>Altitude: {flight.altitude} meters</p>
+            <p>Från: {flight.origin_country}</p>
+            <p>Altitud: {flight.altitude} meter</p>
           </Popup>
         </Marker>
       )) : !error && <p>No flight data available</p>}
