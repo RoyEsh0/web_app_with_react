@@ -5,6 +5,12 @@ const RouteSearch = ({ onRouteSearch }) => {
   const [departure, setDeparture] = useState('');
   const [destination, setDestination] = useState('');
 
+  const handleRouteSearch = (e) => {
+    e.preventDefault();
+    onRouteSearch(departure, destination);
+  };
+
+  {/*
   // Handles the change in the input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,25 +25,31 @@ const RouteSearch = ({ onRouteSearch }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onRouteSearch(departure, destination);
-  };
+  };*/}
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="departure"
-        placeholder="Departure Airport"
-        value={departure}
-        onChange={handleChange}
-      />
-      <input
-        type="text"
-        name="destination"
-        placeholder="Destination Airport"
-        value={destination}
-        onChange={handleChange}
-      />
-      <button type="submit">Search Route</button>
+    <form onSubmit={handleRouteSearch} className="space-y-4">
+      <div>
+        <input
+          type="text"
+          name="departure"
+          placeholder="Departure Airport"
+          value={departure}
+          onChange={(e) => setDeparture(e.target.value)}
+          className="w-full p-2 border rounded"
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          name="destination"
+          placeholder="Destination Airport"
+          value={destination}
+          onChange={(e) => setDestination(e.target.value)}
+          className="w-full p-2 border rounded"
+        />
+      </div>
+      <button type="submit" className="w-full bg-green-500 text-white p-2 rounded">Search Route</button>
     </form>
   );
 };

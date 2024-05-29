@@ -15,6 +15,7 @@ import RouteSearch from './components/RouteSearch/RouteSearch';
 
 function AppContent() {
   const { theme } = useTheme();
+
   const [flightData, setFlightData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,10 +28,10 @@ function AppContent() {
 
   useEffect(() => {
     const getFlightData = async () => {
-      console.log("getFlightData")
+      
       try {
         const data = await fetchFlightData();
-        console.log("Fetched flight data:", data)
+       
         if (data.data) {
           setFlightData(data.data);
           setFilteredData(data.data);
@@ -114,15 +115,25 @@ function AppContent() {
   }
 
   return (
-    <div className={`app ${theme}`}>
+    <div className={`app ${theme} flex flex-col h-screen`}>
       <Header />
-      <div className="main-content">
-        <Sidebar />
-        <MapView />
-        <SearchBar onSearch={handleSearch} />
-        <RouteSearch onRouteSearch={handleRouteSearch} />
-        {searchError && <div style={{ color: 'red' }}>{searchError}</div>}
-        <FlightTable flightData={filteredData} />
+      <div className="flex-grow flex relative">
+        <div className="relative flex-grow">
+          <MapView  flightData={filteredData}/>
+          <div className="absolute top-24 right-4 space-y-4 z-10">
+            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-80">
+              <SearchBar onSearch={handleSearch} />
+            </div>
+            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-80">
+              <RouteSearch onRouteSearch={handleRouteSearch} />
+            </div>
+            {searchError && (
+              <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-80 text-red-500">
+                {searchError}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
       <Footer />
     </div>
