@@ -3,11 +3,13 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import './map.css';
+import Search from './search/Search';
 
 const Map = () => {
   const [flightData, setFlightData] = useState([]);
   const [error, setError] = useState(null);
   const [lastFetch, setLastFetch] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const flightIcon = (heading) => L.divIcon({
     html: `<div style="transform: rotate(${heading}deg);">&#9992;</div>`, // Unicode för flygplan-ikon
@@ -71,23 +73,34 @@ const Map = () => {
     return () => clearInterval(interval); 
   }, [lastFetch]);
 
+ //filtrerar flyg utifrån sök (land eller callsign)
+  const filteredFlights = flightData.filter(flight => 
+    flight.callsign.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    flight.origin_country.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <MapContainer center={[50, 10]} zoom={4} style={{ height: '100vh', width: '100%' }}>
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
-      {error && <p>Error: {error}</p>}
-      {flightData.length > 0 ? flightData.map((flight) => (
-        <Marker key={flight.id} position={[flight.latitude, flight.longitude]} icon={flightIcon(flight.heading)}>          <Popup>
-            <p>Flyg ID: {flight.id}</p>
-            <p>Callsign: {flight.callsign}</p>
-            <p>Från: {flight.origin_country}</p>
-            <p>Altitud: {flight.altitude} meter</p>
-          </Popup>
-        </Marker>
-      )) : !error && <p>No flight data available</p>}
-    </MapContainer>
+    <>
+      //sök
+      <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <MapContainer center={[50, 10]} zoom={4} style={{ height: '100vh', width: '100%' }}>
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        {error && <p>Error: {error}</p>}
+        {filteredFlights.length > 0 ? filteredFlights.map((flight) => (
+          <Marker key={flight.id} position={[flight.latitude, flight.longitude]} icon={flightIcon(flight.heading)}>
+            <Popup>
+              <p>Flyg ID: {flight.id}</p>
+              <p>Callsign: {flight.callsign}</p>
+              <p>Från: {flight.origin_country}</p>
+              <p>Altitud: {flight.altitude} meter</p>
+            </Popup>
+          </Marker>
+        )) : !error && <p>No flight data available</p>}
+      </MapContainer>
+    </>
   );
 };
 

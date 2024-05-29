@@ -1,0 +1,16 @@
+
+/* lägger söken på en fixad position överst på sidan */
+.search-container {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+
+  }
+  
+  .search-input {
+    width: 200px;
+    padding: 0.5rem;
+  }
+  
