@@ -10,23 +10,7 @@ const RouteSearch = ({ onRouteSearch }) => {
     onRouteSearch(departure, destination);
   };
 
-  {/*
-  // Handles the change in the input fields
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === 'departure') {
-      setDeparture(value);
-    } else if (name === 'destination') {
-      setDestination(value);
-    }
-  };
-
-  // Handles the form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onRouteSearch(departure, destination);
-  };*/}
-
+ 
   return (
     <form onSubmit={handleRouteSearch} className="space-y-4">
       <div>

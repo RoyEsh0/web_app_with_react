@@ -1,26 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header/header';
-import Sidebar from './components/Sidebar/sidebar';
 import MapView from './components/MapView/mapview';
 import Footer from './components/Footer/footer';
 import './app.css';
 import { ThemeProvider, useTheme } from './ThemeContext';
 import { fetchFlightData } from './services/api';
 import SearchBar from './components/SearchBar/SearchBar';
-import FlightTable from './components/FlightTable/FlightTable';
 import RouteSearch from './components/RouteSearch/RouteSearch';
-
-
-
+import SearchResults from './components/SearchResult/SearchResult';
 
 function AppContent() {
   const { theme } = useTheme();
-
   const [flightData, setFlightData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchError, setSearchError] = useState('');
+  const [useCache, setUseCache] = useState(true); 
 
   useEffect(() => {
     document.body.className = theme;
@@ -28,48 +24,40 @@ function AppContent() {
 
   useEffect(() => {
     const getFlightData = async () => {
-      
       try {
-        const data = await fetchFlightData();
-       
-        if (data.data) {
-          setFlightData(data.data);
-          setFilteredData(data.data);
-        } else {
-          setLoading(false);
-          console.error("No flight data available in the response!");
-        }
+        const data = await fetchFlightData(useCache);
+        console.log("Fetched flight data: ", data);
+        setFlightData(data);
+        setFilteredData(data);
         setLoading(false);
       } catch (error) {
-        console.log("Error in useEffect: ", error.message);
         setError(error);
         setLoading(false);
       }
     };
 
     getFlightData();
-  }, []);
+  }, [useCache]);  
 
   const handleSearch = (searchTerms) => {
     const { departure, destination, filter, value } = searchTerms;
-
     let filtered = flightData;
 
     if (departure) {
       filtered = filtered.filter((flight) =>
-        flight.departure.airport?.toLowerCase().includes(departure.toLowerCase())
+        flight.origin_country?.toLowerCase().includes(departure.toLowerCase())
       );
     }
 
     if (destination) {
       filtered = filtered.filter((flight) =>
-        flight.arrival.airport?.toLowerCase().includes(destination.toLowerCase())
+        flight.callsign?.toLowerCase().includes(destination.toLowerCase())
       );
     }
 
     if (value) {
       filtered = filtered.filter((flight) => {
-        const fieldValue = filter.split('.').reduce((obj, key) => obj?.[key], flight)?.toString().trim().toLowerCase() || '';
+        const fieldValue = flight[filter]?.toString().trim().toLowerCase() || '';
         return fieldValue.includes(value.toLowerCase());
       });
     }
@@ -80,14 +68,15 @@ function AppContent() {
       setSearchError('');
     }
 
-    console.log("Filtered data: ", filtered);
+    console.log('Filtered data: ', filtered);
     setFilteredData(filtered);
+    console.log('Filtered data state set:', filteredData);
   };
 
   const handleRouteSearch = (departure, destination) => {
     const filtered = flightData.filter((flight) =>
-      flight.departure.airport?.toLowerCase().includes(departure.toLowerCase()) &&
-      flight.arrival.airport?.toLowerCase().includes(destination.toLowerCase())
+      flight.origin_country?.toLowerCase().includes(departure.toLowerCase()) &&
+      flight.callsign?.toLowerCase().includes(destination.toLowerCase())
     );
 
     if (filtered.length === 0) {
@@ -96,7 +85,7 @@ function AppContent() {
       setSearchError('');
     }
 
-    console.log("Filtered data: ", filtered);
+    console.log('Filtered data: ', filtered);
     setFilteredData(filtered);
   };
 
@@ -119,7 +108,7 @@ function AppContent() {
       <Header />
       <div className="flex-grow flex relative">
         <div className="relative flex-grow">
-          <MapView  flightData={filteredData}/>
+          <MapView flightData={filteredData} />
           <div className="absolute top-24 right-4 space-y-4 z-10">
             <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-80">
               <SearchBar onSearch={handleSearch} />
@@ -132,8 +121,21 @@ function AppContent() {
                 {searchError}
               </div>
             )}
+            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-80">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={useCache}
+                  onChange={() => setUseCache(!useCache)}
+                />
+                Use Cached Data
+              </label>
+            </div>
           </div>
         </div>
+      </div>
+      <div className="absolute inset-x-0 bottom-0 h-1/3 flex justify-center">
+        <SearchResults filteredData={filteredData} />
       </div>
       <Footer />
     </div>
