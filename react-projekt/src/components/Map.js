@@ -81,7 +81,7 @@ const Map = () => {
 
   return (
     <>
-      //sök
+      
       <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <MapContainer center={[50, 10]} zoom={4} style={{ height: '100vh', width: '100%' }}>
         <TileLayer
