@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Header from './components/Header/header';
 import MapView from './components/MapView/mapview';
 import Footer from './components/Footer/footer';
@@ -9,6 +9,8 @@ import SearchBar from './components/SearchBar/SearchBar';
 import RouteSearch from './components/RouteSearch/RouteSearch';
 import SearchResults from './components/SearchResult/SearchResult';
 
+
+
 function AppContent() {
   const { theme } = useTheme();
   const [flightData, setFlightData] = useState([]);
@@ -17,27 +19,48 @@ function AppContent() {
   const [error, setError] = useState(null);
   const [searchError, setSearchError] = useState('');
   const [useCache, setUseCache] = useState(true); 
+  const [showResults, setShowResults] = useState(false);
+  const searchResultsRef = useRef(null);
 
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
 
+  const fetchAndSetFlightData = async () => {
+    try {
+      const data = await fetchFlightData(useCache);
+      console.log("Fetched flight data: ", data);
+      setFlightData(data);
+      setFilteredData(data);
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const getFlightData = async () => {
-      try {
-        const data = await fetchFlightData(useCache);
-        console.log("Fetched flight data: ", data);
-        setFlightData(data);
-        setFilteredData(data);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
+    fetchAndSetFlightData();
+
+    const interval = setInterval(() => {
+      fetchAndSetFlightData();
+    }, 10000); // Fetch new data every 10 seconds
+
+    return () => clearInterval(interval); // Clear the interval on component unmount
+  }, [useCache]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchResultsRef.current && !searchResultsRef.current.contains(event.target)) {
+        setShowResults(false);
       }
     };
 
-    getFlightData();
-  }, [useCache]);  
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [searchResultsRef]);
 
   const handleSearch = (searchTerms) => {
     const { departure, destination, filter, value } = searchTerms;

@@ -1,12 +1,12 @@
 import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
 // Custom icon for flights
 const flightIcon = new L.Icon({
-  iconUrl: '/plane.png', // Use a path to your flight icon
-  iconSize: [25, 25], // Adjust size as necessary
+  iconUrl: '/plane.png', 
+  iconSize: [25, 25], 
   iconAnchor: [12, 12],
   popupAnchor: [0, -12]
 });
@@ -17,9 +17,12 @@ const MapView = ({ flightData }) => {
       <MapContainer
         center={[59.33, 18.06]}
         zoom={6}
+        minZoom={2}
         style={{ height: '100vh', width: '100%' }}
         className="relative z-0"
+        zoomControl={false}
       >
+        <ZoomControl position="bottomleft" />
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -29,7 +32,7 @@ const MapView = ({ flightData }) => {
           if (latitude !== null && longitude !== null) {
             return (
               <Marker
-                key={flight.icao24 || index} // Use ICAO24 as a key
+                key={flight.icao24 || index} 
                 position={[latitude, longitude]}
                 icon={flightIcon}
               >
