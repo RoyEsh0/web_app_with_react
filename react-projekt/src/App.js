@@ -46,7 +46,7 @@ function AppContent() {
       fetchAndSetFlightData();
     }, 10000); // Fetch new data every 10 seconds
 
-    return () => clearInterval(interval); // Clear the interval on component unmount
+    return () => clearInterval(interval); 
   }, [useCache]);
 
   useEffect(() => {
@@ -157,7 +157,7 @@ function AppContent() {
           </div>
         </div>
       </div>
-      <div className="absolute inset-x-0 bottom-0 h-1/3 flex justify-center">
+      <div className="absolute inset-x-0 bottom-0 h-1/3 flex justify-center mr-20 pr-20">
         <SearchResults filteredData={filteredData} />
       </div>
       <Footer />

@@ -1,8 +1,8 @@
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+//import L from '../RotatedMarker/RotatedMarker';
 import L from 'leaflet';
-
 // Custom icon for flights
 const flightIcon = new L.Icon({
   iconUrl: '/plane.png', 
@@ -35,6 +35,7 @@ const MapView = ({ flightData }) => {
                 key={flight.icao24 || index} 
                 position={[latitude, longitude]}
                 icon={flightIcon}
+                //rotationAngle={flight.track || 0}
               >
                 <Popup>
                   <div>
