@@ -44,7 +44,7 @@ function AppContent() {
 
     const interval = setInterval(() => {
       fetchAndSetFlightData();
-    }, 10000); // Fetch new data every 10 seconds
+    }, 5000); // Fetch new data every 10 seconds
 
     return () => clearInterval(interval); 
   }, [useCache]);
