@@ -8,7 +8,24 @@ export const fetchFlightData = async () => {
     }
 
     const data = await response.json();
-    const processedData = data.states.map(state => ({
+
+
+    if (!Array.isArray(data.states)) {
+      throw new Error('Invalid data format: data.states is not an array');
+    }
+    
+    const processedData = data.states
+      .filter((state) => {
+        const latitude = state[6];
+        const longitude = state[5];
+        return (
+          latitude !== null && longitude !== null && 
+          latitude >= 35 && latitude <= 70 &&
+          longitude >= -10 && longitude <= 30
+        );
+      })
+    .slice(0, 100) //begränsar till 100 flyg
+    .map(state => ({
       icao24: state[0],
       callsign: state[1],
       origin_country: state[2],
