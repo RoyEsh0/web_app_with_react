@@ -13,8 +13,8 @@ const MapView = ({ flightData }) => {
   return (
     <div className="map-view relative z-0">
       <MapContainer
-        center={[59.33, 18.06]}
-        zoom={6}
+        center={[54, 15]}
+        zoom={4}
         minZoom={2}
         style={{ height: '100vh', width: '100%' }}
         className="relative z-0"
