@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerms, setSearchTerms] = useState({
@@ -18,8 +18,16 @@ const SearchBar = ({ onSearch }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    localStorage.setItem('searchHistory', JSON.stringify(searchTerms));
     onSearch(searchTerms); 
   };
+
+  useEffect(() => {
+    const savedSearch = JSON.parse(localStorage.getItem('searchHistory'));
+    if (savedSearch) {
+      setSearchTerms(savedSearch);
+    }
+  }, []);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
