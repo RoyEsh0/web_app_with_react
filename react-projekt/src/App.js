@@ -17,7 +17,6 @@ function AppContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchError, setSearchError] = useState('');
-  const [useCache, setUseCache] = useState(true); 
   const [showResults, setShowResults] = useState(false);
   const searchResultsRef = useRef(null);
 
@@ -27,7 +26,7 @@ function AppContent() {
 
   const fetchAndSetFlightData = async () => {
     try {
-      const data = await fetchFlightData(useCache);
+      const data = await fetchFlightData();
       console.log("Fetched flight data: ", data);
       setFlightData(data);
       setFilteredData(data);
@@ -43,10 +42,10 @@ function AppContent() {
 
     const interval = setInterval(() => {
       fetchAndSetFlightData();
-    }, 5000); // Fetch new data every 10 seconds
+    }, 5000); // uppdateras var 5e sekund
 
     return () => clearInterval(interval); 
-  }, [useCache]);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -143,16 +142,6 @@ function AppContent() {
                 {searchError}
               </div>
             )}
-            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-80">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={useCache}
-                  onChange={() => setUseCache(!useCache)}
-                />
-                Use Cached Data
-              </label>
-            </div>
           </div>
         </div>
       </div>
