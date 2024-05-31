@@ -7,7 +7,6 @@ import { ThemeProvider, useTheme } from './ThemeContext';
 import { fetchFlightData } from './services/api';
 import SearchBar from './components/SearchBar/SearchBar';
 import RouteSearch from './components/RouteSearch/RouteSearch';
-import SearchResults from './components/SearchResult/SearchResult';
 
 
 
@@ -157,9 +156,7 @@ function AppContent() {
           </div>
         </div>
       </div>
-      <div className="absolute inset-x-0 bottom-0 h-1/3 flex justify-center mr-20 pr-20">
-        <SearchResults filteredData={filteredData} />
-      </div>
+
       <Footer />
     </div>
   );
