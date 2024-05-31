@@ -27,7 +27,7 @@ export const fetchFlightData = async (useCache = true) => {
       baro_altitude: state[7],
       on_ground: state[8],
       velocity: state[9],
-      true_track: state[10],
+      heading: state[10],
       vertical_rate: state[11],
       sensors: state[12],
       geo_altitude: state[13],

@@ -1,14 +1,12 @@
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-//import L from '../RotatedMarker/RotatedMarker';
 import L from 'leaflet';
-// Custom icon for flights
-const flightIcon = new L.Icon({
-  iconUrl: '/plane.png', 
-  iconSize: [25, 25], 
-  iconAnchor: [12, 12],
-  popupAnchor: [0, -12]
+import './mapview.css'
+
+const flightIcon = (heading) => L.divIcon({
+  html: `<div style="transform: rotate(${heading}deg);">&#9992;</div>`,
+  className: 'flight-icon',
 });
 
 const MapView = ({ flightData }) => {
@@ -28,14 +26,13 @@ const MapView = ({ flightData }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {flightData && flightData.map((flight, index) => {
-          const { latitude, longitude, callsign, origin_country, geo_altitude, velocity } = flight;
+          const { latitude, longitude, callsign, origin_country, geo_altitude, velocity, heading } = flight;
           if (latitude !== null && longitude !== null) {
             return (
               <Marker
-                key={flight.icao24 || index} 
+                key={flight.id || index}
                 position={[latitude, longitude]}
-                icon={flightIcon}
-                //rotationAngle={flight.track || 0}
+                icon={flightIcon(heading || 0)} 
               >
                 <Popup>
                   <div>
@@ -48,7 +45,7 @@ const MapView = ({ flightData }) => {
               </Marker>
             );
           } else {
-            console.warn(`Flight ${flight ? flight.icao24 : 'undefined'} is missing location data.`);
+            console.warn(`Flight ${flight ? flight.id : 'undefined'} is missing location data.`);
             return null;
           }
         })}
