@@ -1,15 +1,14 @@
+// App.js
 import React, { useState, useEffect, useRef } from 'react';
 import Header from './components/Header/header';
 import MapView from './components/MapView/mapview';
 import Footer from './components/Footer/footer';
-import './app.css';
+
 import { ThemeProvider, useTheme } from './ThemeContext';
 import { fetchFlightData } from './services/api';
 import SearchBar from './components/SearchBar/SearchBar';
 import RouteSearch from './components/RouteSearch/RouteSearch';
 import Favorites from './components/Favorites/Favorites';
-
-
 
 function AppContent() {
   const { theme } = useTheme();
@@ -44,7 +43,7 @@ function AppContent() {
 
     const interval = setInterval(() => {
       fetchAndSetFlightData();
-    }, 5000); // uppdateras var 5e sekund
+    }, 5000); // Update every 5 seconds
 
     return () => clearInterval(interval); 
   }, []);
@@ -73,7 +72,6 @@ function AppContent() {
   const handleRemoveFavorite = (icao24) => {
     setFavorites((prevFavorites) => prevFavorites.filter(flight => flight.icao24 !== icao24));
   };
-
 
   const handleSearch = (searchTerms) => {
     const { departure, destination, filter, value } = searchTerms;
@@ -142,26 +140,27 @@ function AppContent() {
   return (
     <div className={`app ${theme} flex flex-col h-screen`}>
       <Header />
-      <div className="flex-grow flex relative">
-        <div className="relative flex-grow">
-        <MapView flightData={filteredData} onAddFavorite={handleAddFavorite} />
-          <div className="absolute top-24 right-4 space-y-4 z-10">
-            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-80">
+      <div className="flex-grow flex flex-col lg:flex-row relative overflow-hidden">
+        <div className="relative flex-grow w-full h-full">
+          <MapView flightData={filteredData} onAddFavorite={handleAddFavorite} />
+          <div className="absolute top-20 right-0 lg:top-24 lg:right-4 lg:w-80 w-full px-4 lg:px-0 space-y-4 z-10">
+            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-full lg:w-80">
               <SearchBar onSearch={handleSearch} />
             </div>
-            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-80">
+            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-full lg:w-80">
               <RouteSearch onRouteSearch={handleRouteSearch} />
             </div>
             {searchError && (
-              <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-80 text-red-500">
+              <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg text-red-500 w-full lg:w-80">
                 {searchError}
               </div>
             )}
-            <Favorites favorites={favorites} onRemoveFavorite={handleRemoveFavorite} />
+            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-full lg:w-80">
+              <Favorites favorites={favorites} onRemoveFavorite={handleRemoveFavorite} />
+            </div>
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );
