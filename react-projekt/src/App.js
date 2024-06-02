@@ -1,9 +1,11 @@
-// App.js
+{/*
+  Denna fil innehåller huvudkomponenten för applikationen.
+  Den hanterar inläsning av data, sökfunktioner, favoritlistor och temaväxling.
+*/}
 import React, { useState, useEffect, useRef } from 'react';
 import Header from './components/Header/header';
 import MapView from './components/MapView/mapview';
 import Footer from './components/Footer/footer';
-
 import { ThemeProvider, useTheme } from './ThemeContext';
 import { fetchFlightData } from './services/api';
 import SearchBar from './components/SearchBar/SearchBar';
@@ -21,10 +23,11 @@ function AppContent() {
   const searchResultsRef = useRef(null);
   const [favorites, setFavorites] = useState(JSON.parse(localStorage.getItem('favorites')) || []);
 
+  {/* Använd effektkrok för att ändra temaklass på body-elementet när temat ändras */}
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
-
+  {/* Funktion för att hämta och sätta flygdata */}
   const fetchAndSetFlightData = async () => {
     try {
       const data = await fetchFlightData();
@@ -38,6 +41,7 @@ function AppContent() {
     }
   };
 
+  {/* Använd effektkrok för att hämta data vid komponentens montering och sätta intervall för datauppdatering */}
   useEffect(() => {
     fetchAndSetFlightData();
 
@@ -61,18 +65,22 @@ function AppContent() {
     };
   }, [searchResultsRef]);
 
+  {/* Använd effektkrok för att uppdatera favoritlistan i localStorage när den ändras */}
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [favorites]);
   
+  {/* Funktion för att lägga till flyg i favoritlistan */}
   const handleAddFavorite = (flight) => {
     setFavorites((prevFavorites) => [...prevFavorites, flight]);
   };
 
+  {/* Funktion för att ta bort flyg i favoritlistan */}
   const handleRemoveFavorite = (icao24) => {
     setFavorites((prevFavorites) => prevFavorites.filter(flight => flight.icao24 !== icao24));
   };
 
+  {/* Funktion för att hantera sökningar baserat på användarens inmatade söktermer */}
   const handleSearch = (searchTerms) => {
     const { departure, destination, filter, value } = searchTerms;
     let filtered = flightData;
@@ -107,6 +115,7 @@ function AppContent() {
     console.log('Filtered data state set:', filteredData);
   };
 
+  {/* Funktion för att hantera rutsökningar baserat på avgångs- och destinationsflygplats */}
   const handleRouteSearch = (departure, destination) => {
     const filtered = flightData.filter((flight) =>
       flight.origin_country?.toLowerCase().includes(departure.toLowerCase()) &&
@@ -138,6 +147,7 @@ function AppContent() {
   }
 
   return (
+    /* Temaklass appliceras dynamiskt baserat på valt tema. */
     <div className={`app ${theme} flex flex-col h-screen`}>
       <Header />
       <div className="flex-grow flex flex-col lg:flex-row relative overflow-hidden">

@@ -1,3 +1,7 @@
+/*
+  Definiera CSS-variabler för ljusläget.
+  Dessa variabler används för att styra färger i hela applikationen.
+*/
 :root {
   --background-color: #ffffff;
   --text-color: #000000;
@@ -9,7 +13,8 @@
   --input-background: #ffffff;
   --input-text-color: #000000;
 }
-
+/* Definiera CSS-variabler för mörkerläget. Dessa variabler används när body-elementet har klassen "dark".
+*/
 body.dark {
   --background-color: #121212;
   --text-color: #ffffff;
@@ -21,23 +26,24 @@ body.dark {
   --input-background: #333333;
   --input-text-color: #ffffff;
 }
-
+/* Ställ in bakgrundsfärg och textfärg för body-elementet baserat på variablerna. */
 body {
   background-color: var(--background-color);
   color: var(--text-color);
 }
-
+/* Definiera grundläggande layout för appen. */
 .app {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
-
+/* Ställ in huvudlayouten för huvudinneållet. */
 .main-content {
   display: flex;
   flex: 1;
 }
 
+/* Ställ in layout för header-elementet. */
 .header {
   display: flex;
   justify-content: space-between;
@@ -46,17 +52,19 @@ body {
   background-color: var(--header-background);
   color: var(--header-text-color);
 }
-
+/* Ställ in layout för logotypen i headern. */
 .logo {
   display: flex;
   align-items: center;
 }
 
+/* Ställ in storleken på logotypbilden. */
 .logo img {
   height: 50px;
   margin-right: 10px;
 }
 
+/* Ställ in stilen för sökfältet. */
 .search-bar {
   flex: 1;
   margin: 0 20px;
@@ -67,6 +75,7 @@ body {
   color: var(--input-text-color);
 }
 
+/* Ställ in stilen för inmatningsfält och dropdown-meny i sökfältet. */
 .search-bar input, .search-bar select {
   background-color: var(--input-background);
   color: var(--input-text-color);
@@ -75,10 +84,12 @@ body {
   padding: 5px;
 }
 
+/* Ställ in färgen för platshållartext i inmatningsfälten. */
 .search-bar input::placeholder {
   color: var(--input-text-color);
 }
 
+/* Ställ in stilen för temaväxlingsknappen. */
 .theme-toggle {
   padding: 10px 20px;
   background-color: var(--button-background);
@@ -88,20 +99,24 @@ body {
   cursor: pointer;
 }
 
+/* Ställ in stilen för temaväxlingsknappen vid hovring. */
 .theme-toggle:hover {
   background-color: var(--button-hover-background);
 }
 
+/* Ställ in stilen för favoriter-sektionen. */
 .favorites {
   background-color: var(--background-color);
   color: var(--text-color);
 }
 
+/* Ställ in stilen för knapparna i favoriter-sektionen. */
 .favorites button {
   background-color: var(--button-background);
   color: var(--button-text-color);
 }
 
+/* Ställ in stilen för knapparna i favoriter-sektionen vid hovring. */
 .favorites button:hover {
   background-color: var(--button-hover-background);
 }

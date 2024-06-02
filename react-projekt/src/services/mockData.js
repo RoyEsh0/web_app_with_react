@@ -1,3 +1,4 @@
+{/* Denna fil innehåller mockdata */}
 export const mockFlightData = async () => {
   const mockData = {
     data: [

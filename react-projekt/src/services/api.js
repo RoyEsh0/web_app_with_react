@@ -1,11 +1,20 @@
+{/*
+  Denna fil innehåller funktioner för att hämta flygdata från OpenSky Network API.
+  Den inkluderar caching för att minska antalet API-anrop.
+*/}
+
 import { setCache, getCache } from './cache';
 
 const API_URL = 'https://opensky-network.org/api/states/all';
+{/*
+  fetchFlightData-funktionen hämtar flygdata från OpenSky Network API.
+  Om data finns i cachen används den istället för att göra ett nytt API-anrop.
+*/}
 
 export const fetchFlightData = async () => {
   const cacheKey = 'flightData';
   const cachedData = getCache(cacheKey);
-
+  {/* Använd cachad data om den finns */}
   if (cachedData) {
     console.log('Using cached data');
     return cachedData;
@@ -22,7 +31,7 @@ export const fetchFlightData = async () => {
     if (!Array.isArray(data.states)) {
       throw new Error('Invalid data format: data.states is not an array');
     }
-
+    {/* Filtrera och processa data för att inkludera endast relevanta flyg */}
     const processedData = data.states
       .filter((state) => {
         const latitude = state[6];
@@ -33,7 +42,7 @@ export const fetchFlightData = async () => {
           longitude >= -10 && longitude <= 30
         );
       })
-      .slice(0, 100) // Limit to 100 flights
+      .slice(0, 100) // Begränsar till 100 flyg
       .map(state => ({
         icao24: state[0],
         callsign: state[1],
@@ -53,7 +62,7 @@ export const fetchFlightData = async () => {
         spi: state[15],
         position_source: state[16]
       }));
-
+    {/* Spara den processade datan i cachen */}
     setCache(cacheKey, processedData);
     return processedData;
   } catch (error) {

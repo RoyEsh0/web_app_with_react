@@ -1,9 +1,12 @@
+{/*
+Header-komponenten innehåller Logotyp samt en knapp som hanterar växlingen mellan ljus/mörk tema
+*/}
 import React from 'react';
 import './header.css';
 import { useTheme } from '../../ThemeContext';
 
 const Header = () => {
-  
+  {/* Hämtar funktionen toggleTheme från ThemeContext för att växla mellan ljus och mörk tema. */}
   const { toggleTheme } = useTheme ( );
   return (
     <header className="header">

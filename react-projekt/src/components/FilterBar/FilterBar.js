@@ -1,10 +1,15 @@
+/*
+FilterBar-komponenten tillåter användaren att välja ett filter för att söka efter specifik flyginformation.
+*/
 import React from 'react';
 
 const FilterBar = ({selectedFilter, setSelectedFilter}) => {
+    {/* Hanterar ändringar i filtervalet */}
    const handleChange = (e) => {
     setSelectedFilter(e.target.value);
    };
-
+   
+    {/* Hanterar ändringar i filtervalet */}
     return (
         <select value={selectedFilter} onChange={handleChange} className="w-full p-2 border rounded"
         style={{ backgroundColor: 'var(--input-background)', color: 'var(--input-text-color)', borderColor: '#ccc',}}>
