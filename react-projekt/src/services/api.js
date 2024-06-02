@@ -1,9 +1,8 @@
+import { setCache, getCache } from './cache';
 {/*
   Denna fil innehåller funktioner för att hämta flygdata från OpenSky Network API.
   Den inkluderar caching för att minska antalet API-anrop.
 */}
-
-import { setCache, getCache } from './cache';
 
 const API_URL = 'https://opensky-network.org/api/states/all';
 {/*

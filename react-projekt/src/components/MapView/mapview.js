@@ -1,11 +1,13 @@
-{/*
-MapView-komponenten visar en interaktiv karta med flygplan och tillhörande information. 
-*/}
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import './mapview.css';
+
+{/*
+MapView-komponenten visar en interaktiv karta med flygplan och tillhörande information. 
+*/}
+
 {/* Funktion för att skapa en flygikon med rotering baserat på heading */}
 const flightIcon = (heading) => L.divIcon({
   html: `<div style="transform: rotate(${heading}deg);">&#9992;</div>`,

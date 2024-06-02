@@ -1,8 +1,8 @@
-{/* RouteSearch-komponenten tillåter användaren att söka efter flygrutter
-  baserat på avgångs- och destinationsflygplats. */}
-
 import React, { useState } from "react";
 
+{/* RouteSearch-komponenten tillåter användaren att söka efter flygrutter
+  baserat på avgångs- och destinationsflygplats. */}
+  
 const RouteSearch = ({ onRouteSearch }) => {
   {/* Använd state hooks för att lagra avgångs- och destinationsflygplats */}
   const [departure, setDeparture] = useState('');

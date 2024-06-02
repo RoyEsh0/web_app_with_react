@@ -1,8 +1,8 @@
+import React from 'react';
 {/*
 Favorites-komponenten visar en lista över användarens favoriterade flyg.
 Användaren kan också ta bort flyg från favoriterna.
 */}
-import React from 'react';
 
 const Favorites = ({ favorites, onRemoveFavorite }) => {
   return (
@@ -24,7 +24,7 @@ const Favorites = ({ favorites, onRemoveFavorite }) => {
                   <p>Velocity: {flight.velocity} m/s</p>
                 </div>
                 <button 
-                  {/* Knapp för att ta bort flyg från favoriter */}
+                  /* Knapp för att ta bort flyg från favoriter */
                   onClick={() => onRemoveFavorite(flight.icao24)}
                   className="px-2 py-1 rounded"
                   style={{ backgroundColor: 'var(--button-background)', color: 'var(--button-text-color)' }}

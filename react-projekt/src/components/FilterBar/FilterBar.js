@@ -1,7 +1,8 @@
+import React from 'react';
+
 /*
 FilterBar-komponenten tillåter användaren att välja ett filter för att söka efter specifik flyginformation.
 */
-import React from 'react';
 
 const FilterBar = ({selectedFilter, setSelectedFilter}) => {
     {/* Hanterar ändringar i filtervalet */}

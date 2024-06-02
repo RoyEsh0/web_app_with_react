@@ -1,7 +1,3 @@
-{/*
-  Denna fil innehåller huvudkomponenten för applikationen.
-  Den hanterar inläsning av data, sökfunktioner, favoritlistor och temaväxling.
-*/}
 import React, { useState, useEffect, useRef } from 'react';
 import Header from './components/Header/header';
 import MapView from './components/MapView/mapview';
@@ -11,6 +7,11 @@ import { fetchFlightData } from './services/api';
 import SearchBar from './components/SearchBar/SearchBar';
 import RouteSearch from './components/RouteSearch/RouteSearch';
 import Favorites from './components/Favorites/Favorites';
+
+{/*
+  Denna fil innehåller huvudkomponenten för applikationen.
+  Den hanterar inläsning av data, sökfunktioner, favoritlistor och temaväxling.
+*/}
 
 function AppContent() {
   const { theme } = useTheme();

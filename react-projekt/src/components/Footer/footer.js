@@ -1,8 +1,7 @@
-{/* Footer-komponent */}
-
 import React from 'react';
 import './footer.css';
 
+{/* Footer-komponent */}
 const Footer = () => {
   return (
     <footer className="footer">

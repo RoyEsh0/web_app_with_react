@@ -1,7 +1,9 @@
+import React, { useState } from 'react';
+
+
 {/* SearchBar-komponenten tillåter användaren att söka efter flyginformation
   baserat på avgångs- och destinationsflygplats samt ett filter och dess värde.
 */}
-import React, { useState } from 'react';
 
 const SearchBar = ({ onSearch }) => {
   {/* Använd state hooks för att lagra söktermer */}
