@@ -9,3 +9,27 @@
   text-align: center;
   line-height: 1;
 }
+
+.popup-content {
+  padding: 10px;
+  border-radius: 5px;
+}
+.leaflet-popup-content-wrapper {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-radius: 5px;
+}
+
+.leaflet-popup-tip {
+  background-color: var(--background-color);
+}
+.add-favorite-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-favorite-button:hover {
+  background-color: var(--button-hover-background);
+}

@@ -35,14 +35,15 @@ const MapView = ({ flightData, onAddFavorite }) => {
                 icon={flightIcon(heading || 0)} 
               >
                 <Popup>
-                  <div>
+                  <div className="popup-content">
                     <h3>{callsign || 'Unknown'}</h3>
                     <p>Country: {origin_country}</p>
                     <p>Altitude: {geo_altitude} m</p>
                     <p>Velocity: {velocity} m/s</p>
                     <button 
                       onClick={() => onAddFavorite(flight)}
-                      className="bg-blue-500 text-white px-2 py-1 rounded mt-2"
+                      className="add-favorite-button mt-2"
+                      style={{ backgroundColor: 'var(--button-background)', color: 'var(--button-text-color)' }}
                     >
                       Add to Favorites
                     </button>

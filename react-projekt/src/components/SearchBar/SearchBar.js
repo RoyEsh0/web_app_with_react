@@ -37,6 +37,7 @@ const SearchBar = ({ onSearch }) => {
           value={searchTerms.filter}
           onChange={handleChange}
           className="w-full p-2 border rounded"
+          style={{ backgroundColor: 'var(--input-background)', color: 'var(--input-text-color)' }}
         >
           <option value="callsign">Callsign</option>
           <option value="origin_country">Origin Country</option>
@@ -52,9 +53,13 @@ const SearchBar = ({ onSearch }) => {
           value={searchTerms.value}
           onChange={handleChange}
           className="w-full p-2 border rounded"
+          style={{ backgroundColor: 'var(--input-background)', color: 'var(--input-text-color)' }}
         />
       </div>
-      <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">Search</button>
+      <button type="submit" className="w-full p-2 rounded"
+      style={{ backgroundColor: 'var(--button-background)', color: 'var(--button-text-color)' }}
+      >
+        Search</button>
     </form>
   );
 };

@@ -146,10 +146,12 @@ function AppContent() {
         <div className="relative flex-grow">
         <MapView flightData={filteredData} onAddFavorite={handleAddFavorite} />
           <div className="absolute top-24 right-4 space-y-4 z-10">
-            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-80">
+            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-80"
+            style={{ backgroundColor: 'var(--background-color)', color: 'var(--text-color)' }}>
               <SearchBar onSearch={handleSearch} />
             </div>
-            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-80">
+            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-80"
+            style={{ backgroundColor: 'var(--background-color)', color: 'var(--text-color)' }}>
               <RouteSearch onRouteSearch={handleRouteSearch} />
             </div>
             {searchError && (
