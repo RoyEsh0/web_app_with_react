@@ -1,6 +1,16 @@
+import { setCache, getCache } from './cache';
+
 const API_URL = 'https://opensky-network.org/api/states/all';
 
 export const fetchFlightData = async () => {
+  const cacheKey = 'flightData';
+  const cachedData = getCache(cacheKey);
+
+  if (cachedData) {
+    console.log('Using cached data');
+    return cachedData;
+  }
+
   try {
     const response = await fetch(API_URL);
     if (!response.ok) {
@@ -9,42 +19,42 @@ export const fetchFlightData = async () => {
 
     const data = await response.json();
 
-
     if (!Array.isArray(data.states)) {
       throw new Error('Invalid data format: data.states is not an array');
     }
-    
+
     const processedData = data.states
       .filter((state) => {
         const latitude = state[6];
         const longitude = state[5];
         return (
-          latitude !== null && longitude !== null && 
+          latitude !== null && longitude !== null &&
           latitude >= 35 && latitude <= 70 &&
           longitude >= -10 && longitude <= 30
         );
       })
-    .slice(0, 100) //begränsar till 100 flyg
-    .map(state => ({
-      icao24: state[0],
-      callsign: state[1],
-      origin_country: state[2],
-      time_position: state[3],
-      last_contact: state[4],
-      longitude: state[5],
-      latitude: state[6],
-      baro_altitude: state[7],
-      on_ground: state[8],
-      velocity: state[9],
-      heading: state[10],
-      vertical_rate: state[11],
-      sensors: state[12],
-      geo_altitude: state[13],
-      squawk: state[14],
-      spi: state[15],
-      position_source: state[16]
-    }));
+      .slice(0, 100) // Limit to 100 flights
+      .map(state => ({
+        icao24: state[0],
+        callsign: state[1],
+        origin_country: state[2],
+        time_position: state[3],
+        last_contact: state[4],
+        longitude: state[5],
+        latitude: state[6],
+        baro_altitude: state[7],
+        on_ground: state[8],
+        velocity: state[9],
+        heading: state[10],
+        vertical_rate: state[11],
+        sensors: state[12],
+        geo_altitude: state[13],
+        squawk: state[14],
+        spi: state[15],
+        position_source: state[16]
+      }));
 
+    setCache(cacheKey, processedData);
     return processedData;
   } catch (error) {
     console.error('Error fetching flight data:', error);

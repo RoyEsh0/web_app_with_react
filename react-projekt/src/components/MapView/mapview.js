@@ -1,17 +1,18 @@
+// components/MapView/mapview.js
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import './mapview.css'
+import './mapview.css';
 
 const flightIcon = (heading) => L.divIcon({
   html: `<div style="transform: rotate(${heading}deg);">&#9992;</div>`,
   className: 'flight-icon',
 });
 
-const MapView = ({ flightData, onAddFavorite }) => {
+const MapView = ({ flightData, onAddFavorite, className }) => {
   return (
-    <div className="map-view relative z-0">
+    <div className={`map-view w-full h-full lg:h-screen relative z-0 ${className}`}>
       <MapContainer
         center={[54, 15]}
         zoom={4}

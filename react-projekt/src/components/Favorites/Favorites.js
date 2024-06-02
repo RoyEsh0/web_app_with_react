@@ -1,8 +1,9 @@
+// components/Favorites/Favorites.js
 import React from 'react';
 
 const Favorites = ({ favorites, onRemoveFavorite }) => {
   return (
-    <div className="favorites bg-white bg-opacity-50 p-4 rounded shadow-lg w-80">
+    <div className="favorites bg-white bg-opacity-50 p-4 rounded shadow-lg w-full lg:w-80">
       <h2 className="text-xl font-bold mb-4">Favorites</h2>
       {favorites.length === 0 ? (
         <p>No favorites added yet.</p>

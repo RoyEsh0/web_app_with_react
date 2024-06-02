@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+// components/SearchBar/SearchBar.js
+import React, { useState } from 'react';
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerms, setSearchTerms] = useState({
@@ -8,53 +9,59 @@ const SearchBar = ({ onSearch }) => {
     value: ''
   });
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setSearchTerms((prevTerms) => ({
-      ...prevTerms,
-      [name]: value,
+      ...prevTerms, [name]: value
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem('searchHistory', JSON.stringify(searchTerms));
-    onSearch(searchTerms); 
+    onSearch(searchTerms);
   };
 
-  useEffect(() => {
-    const savedSearch = JSON.parse(localStorage.getItem('searchHistory'));
-    if (savedSearch) {
-      setSearchTerms(savedSearch);
-    }
-  }, []);
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
+    <form onSubmit={handleSubmit} className="space-y-2">
+      <input
+        type="text"
+        name="departure"
+        value={searchTerms.departure}
+        onChange={handleInputChange}
+        placeholder="Departure"
+        className="w-full p-2 border border-gray-300 rounded"
+      />
+      <input
+        type="text"
+        name="destination"
+        value={searchTerms.destination}
+        onChange={handleInputChange}
+        placeholder="Destination"
+        className="w-full p-2 border border-gray-300 rounded"
+      />
+      <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
         <select
           name="filter"
           value={searchTerms.filter}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
+          onChange={handleInputChange}
+          className="w-full md:flex-grow p-2 border border-gray-300 rounded"
         >
           <option value="callsign">Callsign</option>
           <option value="origin_country">Origin Country</option>
-          <option value="icao24">ICAO24</option>
-          <option value="geo_altitude">Geographic Altitude</option>
+          {/* Add other filter options if needed */}
         </select>
-      </div>
-      <div>
         <input
           type="text"
           name="value"
-          placeholder="Search by filter"
           value={searchTerms.value}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
+          onChange={handleInputChange}
+          placeholder="Search value"
+          className="w-full md:flex-grow p-2 border border-gray-300 rounded"
         />
       </div>
-      <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">Search</button>
+      <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">
+        Search
+      </button>
     </form>
   );
 };
