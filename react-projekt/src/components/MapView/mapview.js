@@ -9,7 +9,7 @@ const flightIcon = (heading) => L.divIcon({
   className: 'flight-icon',
 });
 
-const MapView = ({ flightData }) => {
+const MapView = ({ flightData, onAddFavorite }) => {
   return (
     <div className="map-view relative z-0">
       <MapContainer
@@ -40,6 +40,12 @@ const MapView = ({ flightData }) => {
                     <p>Country: {origin_country}</p>
                     <p>Altitude: {geo_altitude} m</p>
                     <p>Velocity: {velocity} m/s</p>
+                    <button 
+                      onClick={() => onAddFavorite(flight)}
+                      className="bg-blue-500 text-white px-2 py-1 rounded mt-2"
+                    >
+                      Add to Favorites
+                    </button>
                   </div>
                 </Popup>
               </Marker>

@@ -7,6 +7,7 @@ import { ThemeProvider, useTheme } from './ThemeContext';
 import { fetchFlightData } from './services/api';
 import SearchBar from './components/SearchBar/SearchBar';
 import RouteSearch from './components/RouteSearch/RouteSearch';
+import Favorites from './components/Favorites/Favorites';
 
 
 
@@ -19,6 +20,7 @@ function AppContent() {
   const [searchError, setSearchError] = useState('');
   const [showResults, setShowResults] = useState(false);
   const searchResultsRef = useRef(null);
+  const [favorites, setFavorites] = useState(JSON.parse(localStorage.getItem('favorites')) || []);
 
   useEffect(() => {
     document.body.className = theme;
@@ -59,6 +61,19 @@ function AppContent() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [searchResultsRef]);
+
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [favorites]);
+  
+  const handleAddFavorite = (flight) => {
+    setFavorites((prevFavorites) => [...prevFavorites, flight]);
+  };
+
+  const handleRemoveFavorite = (icao24) => {
+    setFavorites((prevFavorites) => prevFavorites.filter(flight => flight.icao24 !== icao24));
+  };
+
 
   const handleSearch = (searchTerms) => {
     const { departure, destination, filter, value } = searchTerms;
@@ -129,7 +144,7 @@ function AppContent() {
       <Header />
       <div className="flex-grow flex relative">
         <div className="relative flex-grow">
-          <MapView flightData={filteredData} />
+        <MapView flightData={filteredData} onAddFavorite={handleAddFavorite} />
           <div className="absolute top-24 right-4 space-y-4 z-10">
             <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-80">
               <SearchBar onSearch={handleSearch} />
@@ -142,6 +157,7 @@ function AppContent() {
                 {searchError}
               </div>
             )}
+            <Favorites favorites={favorites} onRemoveFavorite={handleRemoveFavorite} />
           </div>
         </div>
       </div>
