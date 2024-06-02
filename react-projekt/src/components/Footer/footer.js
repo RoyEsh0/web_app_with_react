@@ -4,7 +4,7 @@ import './footer.css';
 const Footer = () => {
   return (
     <footer className="footer">
-      Footer
+      © 2024 Copyright: Group 16
     </footer>
   );
 };
