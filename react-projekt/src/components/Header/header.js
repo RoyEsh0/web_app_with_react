@@ -1,6 +1,10 @@
 import React from 'react';
+import './header.css';
+import { useTheme } from '../../ThemeContext';
 
 const Header = () => {
+  
+  const { toggleTheme } = useTheme ( );
   return (
     <header className="header">
       <div className="logo">
