@@ -5,9 +5,9 @@ const FilterBar = ({selectedFilter, setSelectedFilter}) => {
     setSelectedFilter(e.target.value);
    };
 
-    
     return (
-        <select value={selectedFilter} onChange={handleChange}>
+        <select value={selectedFilter} onChange={handleChange} className="w-full p-2 border rounded"
+        style={{ backgroundColor: 'var(--input-background)', color: 'var(--input-text-color)', borderColor: '#ccc',}}>
             <option value="flight_date">Flight Date</option>
             <option value="flight_status">Flight Status</option>
             <option value="flight.name">Airline</option>

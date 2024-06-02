@@ -3,7 +3,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: #f1f1f1;
+  background-color: var(--header-background);
+  color: var(--header-text-color);
 }
 
 .logo {
@@ -26,13 +27,13 @@
 
 .theme-toggle {
   padding: 5px 10px;
-  background-color: #007BFF;
-  color: white;
+  background-color: var(--button-background);
+  color: var(--button-text-color);
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .theme-toggle:hover {
-  background-color: #0056b3;
+  background-color: var(--button-hover-background);
 }

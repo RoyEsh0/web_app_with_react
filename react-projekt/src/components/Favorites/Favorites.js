@@ -3,7 +3,7 @@ import React from 'react';
 
 const Favorites = ({ favorites, onRemoveFavorite }) => {
   return (
-    <div className="favorites bg-white bg-opacity-50 p-4 rounded shadow-lg w-full lg:w-80">
+    <div className="favorites bg-white bg-opacity-50 p-4 rounded shadow-lg w-full lg:w-80" style={{ backgroundColor: 'var(--background-color)', color: 'var(--text-color)' }}>
       <h2 className="text-xl font-bold mb-4">Favorites</h2>
       {favorites.length === 0 ? (
         <p>No favorites added yet.</p>
@@ -20,7 +20,8 @@ const Favorites = ({ favorites, onRemoveFavorite }) => {
                 </div>
                 <button 
                   onClick={() => onRemoveFavorite(flight.icao24)}
-                  className="bg-red-500 text-white px-2 py-1 rounded"
+                  className="px-2 py-1 rounded"
+                  style={{ backgroundColor: 'var(--button-background)', color: 'var(--button-text-color)' }}
                 >
                   Remove
                 </button>

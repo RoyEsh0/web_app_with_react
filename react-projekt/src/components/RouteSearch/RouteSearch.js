@@ -20,6 +20,7 @@ const RouteSearch = ({ onRouteSearch }) => {
           value={departure}
           onChange={(e) => setDeparture(e.target.value)}
           className="w-full p-2 border rounded"
+          style={{ backgroundColor: 'var(--input-background)', color: 'var(--input-text-color)' }}
         />
       </div>
       <div>
@@ -30,9 +31,13 @@ const RouteSearch = ({ onRouteSearch }) => {
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
           className="w-full p-2 border rounded"
+          style={{ backgroundColor: 'var(--input-background)', color: 'var(--input-text-color)' }}
         />
       </div>
-      <button type="submit" className="w-full bg-green-500 text-white p-2 rounded">Search Route</button>
+      <button type="submit" className="w-full p-2 rounded"
+      style={{ backgroundColor: 'var(--button-background)', color: 'var(--button-text-color)' }}
+      >
+        Search Route</button>
     </form>
   );
 };

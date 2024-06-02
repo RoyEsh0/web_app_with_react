@@ -142,12 +142,14 @@ function AppContent() {
       <Header />
       <div className="flex-grow flex flex-col lg:flex-row relative overflow-hidden">
         <div className="relative flex-grow w-full h-full">
-          <MapView flightData={filteredData} onAddFavorite={handleAddFavorite} />
+        <MapView flightData={filteredData} onAddFavorite={handleAddFavorite} />
           <div className="absolute top-20 right-0 lg:top-24 lg:right-4 lg:w-80 w-full px-4 lg:px-0 space-y-4 z-10">
-            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-full lg:w-80">
+            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-full lg:w-80"
+            style={{ backgroundColor: 'var(--background-color)', color: 'var(--text-color)' }}>
               <SearchBar onSearch={handleSearch} />
             </div>
-            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-full lg:w-80">
+            <div className="bg-white bg-opacity-50 p-4 rounded shadow-lg w-full lg:w-80"
+            style={{ backgroundColor: 'var(--background-color)', color: 'var(--text-color)' }}>
               <RouteSearch onRouteSearch={handleRouteSearch} />
             </div>
             {searchError && (

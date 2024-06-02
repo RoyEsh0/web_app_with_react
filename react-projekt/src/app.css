@@ -6,6 +6,8 @@
   --button-background: #007BFF;
   --button-text-color: #ffffff;
   --button-hover-background: #0056b3;
+  --input-background: #ffffff;
+  --input-text-color: #000000;
 }
 
 body.dark {
@@ -16,6 +18,8 @@ body.dark {
   --button-background: #74bdc9;
   --button-text-color: #000000;
   --button-hover-background: #007bf0; 
+  --input-background: #333333;
+  --input-text-color: #ffffff;
 }
 
 body {
@@ -59,6 +63,20 @@ body {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  background-color: var(--input-background);
+  color: var(--input-text-color);
+}
+
+.search-bar input, .search-bar select {
+  background-color: var(--input-background);
+  color: var(--input-text-color);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.search-bar input::placeholder {
+  color: var(--input-text-color);
 }
 
 .theme-toggle {
@@ -71,5 +89,19 @@ body {
 }
 
 .theme-toggle:hover {
+  background-color: var(--button-hover-background);
+}
+
+.favorites {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.favorites button {
+  background-color: var(--button-background);
+  color: var(--button-text-color);
+}
+
+.favorites button:hover {
   background-color: var(--button-hover-background);
 }
