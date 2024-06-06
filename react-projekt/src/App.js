@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Header from './components/Header/header';
 import MapView from './components/MapView/mapview';
 import Footer from './components/Footer/footer';
+import './app.css'
 import { ThemeProvider, useTheme } from './ThemeContext';
 import { fetchFlightData } from './services/api';
 import SearchBar from './components/SearchBar/SearchBar';
@@ -28,6 +29,7 @@ function AppContent() {
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
+
   {/* Funktion för att hämta och sätta flygdata */}
   const fetchAndSetFlightData = async () => {
     try {
@@ -48,7 +50,7 @@ function AppContent() {
 
     const interval = setInterval(() => {
       fetchAndSetFlightData();
-    }, 5000); // Update every 5 seconds
+    }, 5000); // Uppdaterar var 5e sek
 
     return () => clearInterval(interval); 
   }, []);
